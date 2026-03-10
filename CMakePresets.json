@@ -1,0 +1,60 @@
+﻿{
+    "version": 10,
+    "configurePresets": [
+        {
+            "name": "vcpkg",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+        },
+        {
+            "name": "msvc",
+            "inherits": "vcpkg",
+            "description": "Visual Studio 18 2026",
+            "generator": "Visual Studio 18 2026",
+            "architecture": "x64"
+        },
+        {
+            "name": "clang",
+            "hidden": true,
+            "inherits": "vcpkg",
+            "generator": "Ninja Multi-Config"
+        },
+        {
+            "name": "clang-mingw",
+            "inherits": "clang",
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-mingw-clang-static",
+                "CMAKE_C_COMPILER": "$env{LLVM_MINGW_ROOT}/bin/clang.exe",
+                "CMAKE_CXX_COMPILER": "$env{LLVM_MINGW_ROOT}/bin/clang++.exe"
+            },
+            "environment": {
+                "PATH": "$penv{LLVM_MINGW_ROOT}/bin;$penv{PATH}"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "msvc",
+            "configurePreset": "msvc",
+            "configuration": "Release"
+        },
+        {
+            "name": "clang-mingw",
+            "configurePreset": "clang-mingw",
+            "configuration": "Release"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "msvc",
+            "configurePreset": "msvc",
+            "configuration": "Release"
+        },
+        {
+            "name": "clang-mingw",
+            "configurePreset": "clang-mingw",
+            "configuration": "Release"
+        }
+    ]
+}
