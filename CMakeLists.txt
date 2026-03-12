@@ -8,18 +8,18 @@ include(CMakePrintHelpers)
 project(spdlog_module)
 
 find_package(spdlog CONFIG REQUIRED)
+find_package(Catch2 CONFIG REQUIRED)
+
+add_subdirectory(spdlog_module)
 
 add_executable(main)
 target_sources(main
-  PRIVATE
-    FILE_SET CXX_MODULES
-      FILES
-        src/spdlog.ixx
   PRIVATE
     src/main.cpp
 )
 target_link_libraries(main
   PRIVATE
-    spdlog::spdlog
+    spdlog::module
+    Catch2::Catch2
 )
 target_compile_features(main PRIVATE cxx_std_23)
