@@ -1,10 +1,6 @@
-﻿module;
-
-#include <spdlog/fmt/bin_to_hex.h>
-#include <spdlog/spdlog.h>
-
-export module spdlog.logger;
+﻿export module spdlog.logger;
 import std;
+import spdlog.common;
 import spdlog.util;
 
 using spdlog::util::format_with_location;

@@ -1,0 +1,8 @@
+{
+  "name": "spdlog-module",
+  "version-semver": "0.0.0",
+  "dependencies": [
+    "spdlog",
+    "catch2"
+  ]
+}

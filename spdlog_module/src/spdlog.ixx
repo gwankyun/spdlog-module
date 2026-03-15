@@ -1,17 +1,13 @@
-﻿module;
-
-#include <spdlog/fmt/bin_to_hex.h>
-#include <spdlog/spdlog.h>
-
-export module spdlog;
+﻿export module spdlog;
 import std;
+export import spdlog.common;
 import spdlog.util;
 import spdlog.logger;
 
 using spdlog::util::format_with_location;
 using spdlog::util::from_source_location;
 
-namespace logging
+export namespace spdlog::location
 {
     void log(std::source_location location, spdlog::level::level_enum level,
              const std::string& message)
@@ -61,25 +57,14 @@ namespace logging
         auto message = std::vformat(fmt.value, std::make_format_args(args...));
         log(fmt.location, spdlog::level::critical, message);
     }
-} // namespace logging
+} // namespace spdlog::location
 
-export namespace spdlog
-{
-    using logging::critical;
-    using logging::debug;
-    using logging::error;
-    using logging::info;
-    using logging::trace;
-    using logging::warn;
-
-    namespace level
-    {
-        using spdlog::level::level_enum;
-    }
-    using spdlog::default_logger_raw;
-    using spdlog::default_logger;
-    using spdlog::set_level;
-    using spdlog::set_pattern;
-    using spdlog::to_hex;
-    using spdlog::logger;
-} // namespace spdlog
+// export namespace spdlog
+//{
+//     using logging::critical;
+//     using logging::debug;
+//     using logging::error;
+//     using logging::info;
+//     using logging::trace;
+//     using logging::warn;
+// } // namespace spdlog
