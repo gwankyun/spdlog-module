@@ -4,7 +4,6 @@
 import std;
 import spdlog;
 import spdlog.util;
-import spdlog.logger;
 import spdlog.location.alias;
 
 using function_info = std::unordered_map<std::string, std::string>;

@@ -3,10 +3,11 @@ target_sources(spdlog_module
   PUBLIC
     FILE_SET CXX_MODULES
       FILES
-        src/spdlog.ixx
         src/spdlog.common.ixx
         src/spdlog.util.ixx
-        src/spdlog.logger.ixx
+        src/spdlog.ixx
+        src/spdlog.location.ixx
+        src/spdlog.location.logger.ixx
         src/spdlog.location.alias.ixx
 )
 target_link_libraries(spdlog_module

@@ -1,4 +1,4 @@
-﻿export module spdlog.logger;
+﻿export module spdlog.location.logger;
 import std;
 import spdlog.common;
 import spdlog.util;

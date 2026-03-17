@@ -12,7 +12,10 @@
             "inherits": "vcpkg",
             "description": "Visual Studio 18 2026",
             "generator": "Visual Studio 18 2026",
-            "architecture": "x64"
+            "architecture": "x64",
+            "cacheVariables": {
+                "VCPKG_MANIFEST_MODE": "OFF"
+            }
         },
         {
             "name": "clang",
