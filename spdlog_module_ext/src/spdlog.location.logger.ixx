@@ -1,6 +1,6 @@
 ﻿export module spdlog.location.logger;
 import std;
-import spdlog.common;
+import spdlog;
 import spdlog.util;
 
 using spdlog::util::format_with_location;

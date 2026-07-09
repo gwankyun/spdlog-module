@@ -1,9 +1,10 @@
-﻿{
+{
     "version": 10,
     "configurePresets": [
         {
             "name": "vcpkg",
             "hidden": true,
+            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build/${presetName}",
             "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
         },
@@ -14,25 +15,7 @@
             "generator": "Visual Studio 18 2026",
             "architecture": "x64",
             "cacheVariables": {
-                "VCPKG_MANIFEST_MODE": "OFF"
-            }
-        },
-        {
-            "name": "clang",
-            "hidden": true,
-            "inherits": "vcpkg",
-            "generator": "Ninja Multi-Config"
-        },
-        {
-            "name": "clang-mingw",
-            "inherits": "clang",
-            "cacheVariables": {
-                "VCPKG_TARGET_TRIPLET": "x64-mingw-clang-static",
-                "CMAKE_C_COMPILER": "$env{LLVM_MINGW_ROOT}/bin/clang.exe",
-                "CMAKE_CXX_COMPILER": "$env{LLVM_MINGW_ROOT}/bin/clang++.exe"
-            },
-            "environment": {
-                "PATH": "$penv{LLVM_MINGW_ROOT}/bin;$penv{PATH}"
+                "VCPKG_TARGET_TRIPLET": "x64-windows"
             }
         }
     ],
@@ -40,24 +23,16 @@
         {
             "name": "msvc",
             "configurePreset": "msvc",
-            "configuration": "Release"
-        },
-        {
-            "name": "clang-mingw",
-            "configurePreset": "clang-mingw",
-            "configuration": "Release"
+            "configuration": "Debug"
         }
     ],
-    "testPresets": [
+    "workflowPresets": [
         {
             "name": "msvc",
-            "configurePreset": "msvc",
-            "configuration": "Release"
-        },
-        {
-            "name": "clang-mingw",
-            "configurePreset": "clang-mingw",
-            "configuration": "Release"
+            "steps": [
+                { "type": "configure", "name": "msvc" },
+                { "type": "build", "name": "msvc" }
+            ]
         }
     ]
 }

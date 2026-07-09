@@ -1,5 +1,5 @@
 ﻿export module spdlog.location.alias;
-import spdlog;
+import spdlog.ext;
 
 export namespace spdlog
 {

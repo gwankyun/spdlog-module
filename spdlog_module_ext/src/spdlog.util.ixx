@@ -1,6 +1,6 @@
 ﻿export module spdlog.util;
 import std;
-import spdlog.common;
+import spdlog;
 
 export namespace spdlog::util
 {

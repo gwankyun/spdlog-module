@@ -2,7 +2,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 import std;
-import spdlog;
+import spdlog.ext;
 import spdlog.util;
 import spdlog.location.alias;
 
