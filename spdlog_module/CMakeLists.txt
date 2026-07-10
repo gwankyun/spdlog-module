@@ -14,6 +14,10 @@ target_link_libraries(spdlog_module
 )
 target_compile_features(spdlog_module PUBLIC cxx_std_23)
 
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  target_compile_definitions(spdlog_module PUBLIC SPDLOG_HEADER_UNIT=0)
+endif()
+
 if(PROJECT_IS_TOP_LEVEL)
   include(GNUInstallDirs)
 

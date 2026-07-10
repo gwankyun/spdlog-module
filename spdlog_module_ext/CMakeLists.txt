@@ -15,6 +15,8 @@ target_link_libraries(spdlog_module_ext
 )
 target_compile_features(spdlog_module_ext PUBLIC cxx_std_23)
 
+cmake_print_variables(PROJECT_IS_TOP_LEVEL)
+
 if(PROJECT_IS_TOP_LEVEL)
   include(GNUInstallDirs)
 

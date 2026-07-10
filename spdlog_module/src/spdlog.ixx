@@ -1,6 +1,8 @@
 ﻿module;
 
+#ifndef SPDLOG_HEADER_UNIT
 #define SPDLOG_HEADER_UNIT 1
+#endif
 
 #if !SPDLOG_HEADER_UNIT
 #  include <spdlog/fmt/bin_to_hex.h>
