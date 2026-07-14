@@ -1,7 +1,7 @@
 ﻿module;
 
 #ifndef SPDLOG_HEADER_UNIT
-#define SPDLOG_HEADER_UNIT 1
+#  define SPDLOG_HEADER_UNIT 1
 #endif
 
 #if !SPDLOG_HEADER_UNIT
@@ -18,16 +18,19 @@ export namespace spdlog
     {
         using spdlog::level::level_enum;
     }
-    using spdlog::critical;
-    using spdlog::debug;
+
     using spdlog::default_logger;
     using spdlog::default_logger_raw;
-    using spdlog::error;
-    using spdlog::info;
     using spdlog::logger;
     using spdlog::set_level;
     using spdlog::set_pattern;
     using spdlog::source_loc;
+    using spdlog::get;
+
+    using spdlog::critical;
+    using spdlog::debug;
+    using spdlog::error;
+    using spdlog::info;
     using spdlog::trace;
     using spdlog::warn;
 

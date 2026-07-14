@@ -1,50 +1,37 @@
 {
     "version": 10,
+    "include": [
+        "presets/configure.json"
+    ],
     "configurePresets": [
         {
-            "name": "vcpkg",
+            "name": "common",
             "hidden": true,
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/${presetName}",
-            "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
-            "cacheVariables": {
-                "VCPKG_MANIFEST_MODE": "OFF",
-                "VCPKG_MANIFEST_INSTALL": "OFF"
-            }
-        },
-        {
-            "name": "ninja",
-            "hidden": true,
-            "inherits": "vcpkg",
-            "generator": "Ninja Multi-Config",
-            "cacheVariables": {
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
-            }
+            "inherits": [
+                "vcpkg-manifest-mode-off",
+                "vcpkg-manifest-install-off"
+            ]
         },
         {
             "name": "msvc",
-            "inherits": "vcpkg",
-            "description": "Visual Studio 18 2026",
-            "generator": "Visual Studio 18 2026",
-            "architecture": "x64",
-            "cacheVariables": {
-                "VCPKG_TARGET_TRIPLET": "x64-windows"
-            }
+            "inherits": [
+                "common",
+                "msvc-base"
+            ]
         },
         {
             "name": "clang",
-            "inherits": ["ninja"],
-            "cacheVariables": {
-                "VCPKG_TARGET_TRIPLET": "x64-llvm-mingw-dynamic",
-                "CMAKE_C_COMPILER": "$env{LLVM_MINGW_ROOT}/bin/clang.exe",
-                "CMAKE_CXX_COMPILER": "$env{LLVM_MINGW_ROOT}/bin/clang++.exe",
-                "COMPILER_BIN": "$env{LLVM_MINGW_ROOT}/bin",
-                "CMAKE_OBJDUMP": "$env{LLVM_MINGW_ROOT}/bin/llvm-objdump.exe",
-                "USE_IMPORT_STD_UUID": "ON"
-            },
-            "environment": {
-                "PATH": "$env{LLVM_MINGW_ROOT}/bin;$penv{PATH}"
-            }
+            "inherits": [
+                "common",
+                "clang-base"
+            ]
+        },
+        {
+            "name": "gcc",
+            "inherits": [
+                "common",
+                "gcc-base"
+            ]
         }
     ],
     "buildPresets": [
@@ -57,21 +44,51 @@
             "name": "clang",
             "configurePreset": "clang",
             "configuration": "Debug"
+        },
+        {
+            "name": "gcc",
+            "configurePreset": "gcc",
+            "configuration": "Debug"
         }
     ],
     "workflowPresets": [
         {
             "name": "msvc",
             "steps": [
-                { "type": "configure", "name": "msvc" },
-                { "type": "build", "name": "msvc" }
+                {
+                    "type": "configure",
+                    "name": "msvc"
+                },
+                {
+                    "type": "build",
+                    "name": "msvc"
+                }
             ]
         },
         {
             "name": "clang",
             "steps": [
-                { "type": "configure", "name": "clang" },
-                { "type": "build", "name": "clang" }
+                {
+                    "type": "configure",
+                    "name": "clang"
+                },
+                {
+                    "type": "build",
+                    "name": "clang"
+                }
+            ]
+        },
+        {
+            "name": "gcc",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "gcc"
+                },
+                {
+                    "type": "build",
+                    "name": "gcc"
+                }
             ]
         }
     ]

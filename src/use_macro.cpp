@@ -1,6 +1,10 @@
-﻿#include <spdlog_module/spdlog.h>
+﻿#define SPDLOG_MACRO_ONLY
+#include <spdlog/spdlog.h>
 
+#ifdef USE_IMPORT_STD
 import std;
+#endif
+
 import spdlog;
 
 int main(int _argc, char* _argv[])

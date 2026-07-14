@@ -1,0 +1,110 @@
+{
+    "version": 10,
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "generator": "Ninja Multi-Config",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "USE_IMPORT_STD_UUID": "OFF",
+                "USE_IMPORT_STD": "OFF"
+            }
+        },
+        {
+            "name": "cmake-export-compile-commands",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            }
+        },
+        {
+            "name": "vcpkg-manifest-mode-off",
+            "hidden": true,
+            "cacheVariables": {
+                "VCPKG_MANIFEST_MODE": "OFF"
+            }
+        },
+        {
+            "name": "vcpkg-manifest-install-off",
+            "hidden": true,
+            "cacheVariables": {
+                "VCPKG_MANIFEST_INSTALL": "OFF"
+            }
+        },
+        {
+            "name": "use-import-std",
+            "hidden": true,
+            "cacheVariables": {
+                "USE_IMPORT_STD_UUID": "ON",
+                "USE_IMPORT_STD": "ON"
+            }
+        },
+        {
+            "name": "vcpkg",
+            "hidden": true,
+            "inherits": [
+                "base"
+            ],
+            "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+        },
+        {
+            "name": "ninja",
+            "hidden": true,
+            "inherits": [
+                "cmake-export-compile-commands",
+                "vcpkg"
+            ]
+        },
+        {
+            "name": "msvc-base",
+            "hidden": true,
+            "inherits": [
+                "use-import-std",
+                "vcpkg"
+            ],
+            "description": "Visual Studio 18 2026",
+            "generator": "Visual Studio 18 2026",
+            "architecture": "x64",
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-windows"
+            }
+        },
+        {
+            "name": "clang-base",
+            "hidden": true,
+            "inherits": [
+                "use-import-std",
+                "ninja"
+            ],
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-llvm-mingw-dynamic",
+                "CMAKE_C_COMPILER": "$env{LLVM_MINGW_ROOT}/bin/clang.exe",
+                "CMAKE_CXX_COMPILER": "$env{LLVM_MINGW_ROOT}/bin/clang++.exe",
+                "COMPILER_BIN": "$env{LLVM_MINGW_ROOT}/bin",
+                "CMAKE_OBJDUMP": "$env{LLVM_MINGW_ROOT}/bin/llvm-objdump.exe",
+                "USE_IMPORT_STD_UUID": "ON"
+            },
+            "environment": {
+                "PATH": "$env{LLVM_MINGW_ROOT}/bin;$penv{PATH}"
+            }
+        },
+        {
+            "name": "gcc-base",
+            "hidden": true,
+            "inherits": [
+                "ninja"
+            ],
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-mingw-dynamic",
+                "CMAKE_C_COMPILER": "$env{MINGW64_ROOT}/bin/gcc.exe",
+                "CMAKE_CXX_COMPILER": "$env{MINGW64_ROOT}/bin/g++.exe",
+                "COMPILER_BIN": "$env{MINGW64_ROOT}/bin"
+            },
+            "environment": {
+                "VCPKG_BINARY_SOURCES": "clear",
+                "PATH": "$env{MINGW64_ROOT}/bin;$penv{PATH}"
+            }
+        }
+    ]
+}

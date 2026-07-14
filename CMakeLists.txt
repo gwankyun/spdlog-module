@@ -5,37 +5,27 @@ cmake_minimum_required(VERSION 4.3)
 include(CMakePrintHelpers)
 
 include(cmake/cxx_module.cmake)
+include(cmake/bundle.cmake)
 
 # CMake對Clang的import std;支持還在試驗階段
-if(USE_IMPORT_STD_UUID STREQUAL "ON")
-  # 需要設置此UUID
-  get_import_std(import_std_uuid)
-  cmake_print_variables(import_std_uuid)
+get_import_std(import_std_uuid)
+cmake_print_variables(import_std_uuid)
 
-  set(
-    CMAKE_EXPERIMENTAL_CXX_IMPORT_STD
-    ${import_std_uuid}
-    CACHE STRING
-    "UUID for import std"
-  )
-endif()
-
-# 全局启用標準庫模塊
-# if(USE_IMPORT_STD_UUID STREQUAL "ON")
-#   enable_module_std(ON)
-# endif()
+set(
+  CMAKE_EXPERIMENTAL_CXX_IMPORT_STD
+  ${import_std_uuid}
+  CACHE STRING
+  "UUID for import std"
+)
 
 cmake_print_variables(USE_IMPORT_STD_UUID)
 
-# 項目名
 project(spdlog_module
   VERSION 1.0.0
 )
 
 # 全局启用標準庫模塊
-if(USE_IMPORT_STD_UUID STREQUAL "ON")
-  enable_module_std(ON)
-endif()
+enable_module_std(ON)
 
 cmake_print_variables(USE_IMPORT_STD)
 
@@ -73,29 +63,16 @@ target_link_libraries(use_macro
 )
 target_compile_features(use_macro PRIVATE cxx_std_23)
 
+if(USE_IMPORT_STD STREQUAL "ON")
+  target_compile_definitions(use_macro PRIVATE USE_IMPORT_STD=1)
+endif()
+
+add_bundle_command(
+  TARGET use_macro
+  BUNDLE_DIRS "${dirs}"
+  OBJDUMP "${CMAKE_OBJDUMP}"
+)
+
 include(cmake/clang.cmake) # clang_generate_clangd
 
-# 複製運行時文件
-if(CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "GNU")
-  add_custom_command(
-    TARGET use_macro
-    POST_BUILD
-    COMMAND
-      ${CMAKE_COMMAND}
-      # gersemi: off
-      -D apps="$<TARGET_FILE:use_macro>"
-      -D dirs="${dirs}"
-      "$<$<BOOL:${CMAKE_OBJDUMP}>:-D CMAKE_OBJDUMP=${CMAKE_OBJDUMP}>"
-      # gersemi: on
-      -P "${CMAKE_SOURCE_DIR}/cmake/bundle.cmake"
-    COMMENT ""
-  )
-endif()
-
-if(
-  (CMAKE_CXX_COMPILER_ID STREQUAL "Clang") #
-  AND (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "GNU")
-)
-  # 生成.clangd配置文件
-  clang_generate_clangd(generate_clangd)
-endif()
+clang_generate_clangd(generate_clangd)

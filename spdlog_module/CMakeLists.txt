@@ -6,7 +6,7 @@ target_sources(spdlog_module
         src/spdlog.ixx
     FILE_SET HEADERS
       FILES
-        spdlog_module/spdlog.h
+        spdlog/spdlog.h
 )
 target_link_libraries(spdlog_module
   PUBLIC
@@ -14,7 +14,7 @@ target_link_libraries(spdlog_module
 )
 target_compile_features(spdlog_module PUBLIC cxx_std_23)
 
-if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
   target_compile_definitions(spdlog_module PUBLIC SPDLOG_HEADER_UNIT=0)
 endif()
 
