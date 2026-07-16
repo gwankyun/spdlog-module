@@ -7,37 +7,37 @@
             "generator": "Ninja Multi-Config",
             "binaryDir": "${sourceDir}/build/${presetName}",
             "cacheVariables": {
-                "USE_IMPORT_STD_UUID": "OFF",
-                "USE_IMPORT_STD": "OFF"
+                "USE_IMPORT_STD_UUID": false,
+                "USE_IMPORT_STD": false
             }
         },
         {
             "name": "cmake-export-compile-commands",
             "hidden": true,
             "cacheVariables": {
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+                "CMAKE_EXPORT_COMPILE_COMMANDS": true
             }
         },
         {
             "name": "vcpkg-manifest-mode-off",
             "hidden": true,
             "cacheVariables": {
-                "VCPKG_MANIFEST_MODE": "OFF"
+                "VCPKG_MANIFEST_MODE": false
             }
         },
         {
             "name": "vcpkg-manifest-install-off",
             "hidden": true,
             "cacheVariables": {
-                "VCPKG_MANIFEST_INSTALL": "OFF"
+                "VCPKG_MANIFEST_INSTALL": false
             }
         },
         {
             "name": "use-import-std",
             "hidden": true,
             "cacheVariables": {
-                "USE_IMPORT_STD_UUID": "ON",
-                "USE_IMPORT_STD": "ON"
+                "USE_IMPORT_STD_UUID": true,
+                "USE_IMPORT_STD": true
             }
         },
         {
@@ -83,7 +83,7 @@
                 "CMAKE_CXX_COMPILER": "$env{LLVM_MINGW_ROOT}/bin/clang++.exe",
                 "COMPILER_BIN": "$env{LLVM_MINGW_ROOT}/bin",
                 "CMAKE_OBJDUMP": "$env{LLVM_MINGW_ROOT}/bin/llvm-objdump.exe",
-                "USE_IMPORT_STD_UUID": "ON"
+                "USE_IMPORT_STD_UUID": true
             },
             "environment": {
                 "PATH": "$env{LLVM_MINGW_ROOT}/bin;$penv{PATH}"

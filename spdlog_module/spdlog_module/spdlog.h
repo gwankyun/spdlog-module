@@ -9,6 +9,7 @@
 
 #pragma once
 
+#define SPDLOG_MACRO_ONLY
 #  ifndef SPDLOG_MACRO_ONLY
 #include <spdlog/common.h>
 #include <spdlog/details/registry.h>

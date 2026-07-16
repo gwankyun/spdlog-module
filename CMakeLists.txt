@@ -1,31 +1,24 @@
 ﻿# cmake最低版本
-cmake_minimum_required(VERSION 4.3)
+cmake_minimum_required(VERSION 4.4)
 
 # 包含模塊
 include(CMakePrintHelpers)
 
 include(cmake/cxx_module.cmake)
-include(cmake/bundle.cmake)
 
-# CMake對Clang的import std;支持還在試驗階段
-get_import_std(import_std_uuid)
-cmake_print_variables(import_std_uuid)
-
-set(
-  CMAKE_EXPERIMENTAL_CXX_IMPORT_STD
-  ${import_std_uuid}
-  CACHE STRING
-  "UUID for import std"
-)
-
-cmake_print_variables(USE_IMPORT_STD_UUID)
+# 全局启用標準庫模塊
+enable_module_std(ON)
 
 project(spdlog_module
   VERSION 1.0.0
 )
 
-# 全局启用標準庫模塊
-enable_module_std(ON)
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND USE_IMPORT_STD)
+  precompile_std_gcm(precompile_ok)
+  if(NOT precompile_ok)
+    set(USE_IMPORT_STD OFF)
+  endif()
+endif()
 
 cmake_print_variables(USE_IMPORT_STD)
 
@@ -67,12 +60,11 @@ if(USE_IMPORT_STD STREQUAL "ON")
   target_compile_definitions(use_macro PRIVATE USE_IMPORT_STD=1)
 endif()
 
-add_bundle_command(
-  TARGET use_macro
-  BUNDLE_DIRS "${dirs}"
-  OBJDUMP "${CMAKE_OBJDUMP}"
-)
+include(cmake/bundle.cmake)
 
-include(cmake/clang.cmake) # clang_generate_clangd
+add_bundle_command(TARGET use_macro)
+
+# clang_generate_clangd
+include(cmake/clang.cmake)
 
 clang_generate_clangd(generate_clangd)

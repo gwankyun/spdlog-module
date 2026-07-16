@@ -6,7 +6,7 @@ target_sources(spdlog_module
         src/spdlog.ixx
     FILE_SET HEADERS
       FILES
-        spdlog/spdlog.h
+        spdlog_module/spdlog.h
 )
 target_link_libraries(spdlog_module
   PUBLIC
